@@ -1,0 +1,345 @@
+/*
+	Css stylesheet for Sonic
+	Written by Shea Price (Shea.R.Price@gmailcom)
+	Started on 01/16/17
+	
+*/
+
+/* Css Imports
+From Tim Giddens 
+*/
+@import "normalize.css";
+@import "foundation.min.css";
+
+/* Colors */
+
+
+
+.blue {
+	color: #85C1E9;
+}
+
+.azure {
+	color: #FBFCFC;
+}
+
+.credit input[type='text'], .credit textarea {
+	border: 2px solid #ccc;
+}
+
+.reference {
+	border-bottom: 2px solid #f2f2f2;
+	padding: 15px 0px;
+}
+
+	.reference input[type='text'], .reference textarea {
+		margin-bottom: 10px;
+	}
+	
+.agree {
+	background: #f2f2f2;
+	margin-top: 15px !important;
+	margin-bottom: 15px !important;
+}
+
+/* Global */
+
+
+tfoot {
+    display: table-header-group;
+}
+.arrow-down {
+	border: 6px solid transparent;
+	border-top-color: #ccc;
+	display: inline-block;
+	margin-left: 3px;
+	position: relative;
+		top: 3px;
+	width: 0px; height: 0px;
+	vertical-align: middle;
+}
+
+.arrow-up {
+	border: 6px solid transparent;
+	border-bottom-color: #ccc;
+	display: inline-block;
+	margin-left: 3px;
+	position: relative;
+		top: -3px;
+	width: 0px; height: 0px;
+	vertical-align: middle;
+}
+
+body {
+	background: #2C6C7A;
+}
+
+table {
+	margin-top: 15px;
+	width: 200%;
+}
+
+.flex-video {
+	padding-bottom: 54% !important;
+}
+
+.dividing-line {
+	background: #E26C22;
+	display: inline-block;
+	max-width: 150px; width: 100%; height: 5px;
+}
+
+.dividing-line.extra-space {
+	margin-bottom: 35px;
+}
+
+section {
+	padding: 75px 0px;
+	width: 100%;
+}
+
+	section.white {
+		background: #fff;
+	}
+	
+		section.white h3 {
+			color: #2C6C7A;
+		}
+		
+		section.white p {
+			color: #333;
+		}
+	
+	section.grey {
+		background: #f2f2f2;
+	}
+	
+		section.grey h3 {
+			color: #2C6C7A;
+		}
+
+		/* Rows */
+.shrink {
+	/*background: #FBFCFC !important;*/
+	max-width: 50%!important;
+}	
+	
+/* Button */
+
+.button {
+	font: normal 1em/1em "A-Bold", sans-serif;
+	margin: 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+
+.button.blue {
+	background: #2C6C7A !important;
+	color: #fff !important;
+}
+
+/* Typography */
+
+h1 {
+	font: normal 4.5em/1em "A-Bold", sans-serif;
+	margin: 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+h2 {
+	font: normal 3.00em/1em "A-Bold", sans-serif;
+	margin: 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+	h2.thinner {
+		font-family: "A-Regular", sans-serif;
+	}
+
+h3 {
+	font: normal 1.875em/1em "A-Regular", sans-serif;
+	margin: 0px 0px 20px 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+h4 {
+	font: normal 2.250em/1em "A-Regular", sans-serif;
+	margin: 0px 0px 20px 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+h5 {
+	font: normal 1.313em/1em "A-Regular", sans-serif;
+	margin: 0px 0px 5px 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+p {
+	font: normal 1em/1.5em "A-Regular", sans-serif;
+	margin: 20px 0px 0px 0px;
+	
+	-webkit-font-smoothing: antialiased;
+}
+
+	p a {
+		font-family: "A-Bold", sans-serif;
+	}
+
+strong {
+	font-family: "A-Bold", sans-serif;
+	font-weight: normal;
+}
+
+/* Header */
+
+header {
+	background: #fff;
+	padding: 15px 0px;
+	position: fixed;
+		top: 0px;
+		left: 0px;
+	width: 100%;
+	z-index: 9000;
+}
+
+	header .columns {
+		display: inline-block;
+		float: none !important;
+		vertical-align: middle;
+	}
+	
+	header nav a {
+		color: #333333;
+		font: normal 0.875em/1em "A-Bold", sans-serif;
+		margin-left: 20px;
+		text-transform: uppercase;
+		
+		-webkit-font-smoothing: antialiased;
+	}
+	
+		header nav a:first-child {
+			margin-left: 0px;
+		}
+	
+.logo {
+	display: inline-block;
+	max-width: 100%;
+}
+
+
+/* Filters */
+
+.filters {
+	margin-top: 15px;
+}
+
+	.filters h6 {
+		text-transform: uppercase;
+		font: normal .9em "A-Bold", sans-serif !important;
+	}
+	
+	.filters input[type='text'] {
+		font-size: .875em;
+	}
+	
+.clear-filters {
+	background: #f2f2f2;
+	color: #333;
+	font: normal .7em/1em "A-Regular", sans-serif;
+	padding: 5px 10px;
+	text-transform: uppercase;
+}
+
+table th, table th a {
+	color: #333 !important;
+}
+
+.login-container {
+	padding-top: 50px;
+}
+
+.error {
+	color: #f42525;
+	font: normal .9em/1em "A-Regular", sans-serif;
+	padding-bottom: 10px;
+}
+
+.login {
+	background: #f2f2f2;
+	border: 1px solid #ddd;
+	margin: auto;
+	max-width: 400px;
+	padding: 25px;
+}
+
+/* Footer */
+
+footer {
+	background: #FBFCFC;
+	padding: 50px 0px;
+}
+
+	footer .columns {
+		display: inline-block;
+		float: none !important;
+		vertical-align: bottom;
+	}
+
+	footer .logo {
+		color: #fff;
+	}
+	
+	footer nav {
+		padding: 25px 0px;
+	}
+	
+		footer nav a {
+			border-bottom: 2px solid rgba(255,255,255,.5);
+			color: #fff !important;
+			display: block;
+			font: normal 1em/1em "A-Bold", sans-serif;
+			padding: 10px 0px;
+			text-transform: uppercase;
+			
+			-webkit-font-smoothing: antialiased;
+		}
+		
+			footer nav a:last-child {
+				border: none;
+				padding-bottom: 0px;
+			}
+	
+	footer p {
+		color: #fff;
+	}
+	
+		footer p a {
+			color: #fff !important;
+		}
+		
+	footer .copyright p {
+		font-size: 0.875em;
+		margin: 5px 0px 0px 0px;
+	}
+
+/* Fonts */
+
+@import url("http://fast.fonts.net/t/1.css?apiType=css&projectid=2e85bea6-3cf9-4ef2-b830-ecf9090efff2");
+
+@font-face{
+	font-family:"A-Regular";
+	src:url("Fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix");
+	src:url("Fonts/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix") format("eot"),url("Fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2") format("woff2"),url("Fonts/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),url("Fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf") format("truetype"),url("Fonts/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
+}
+
+@font-face{
+	font-family:"A-Bold";
+	src:url("Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix");
+	src:url("Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix") format("eot"),url("Fonts/14c73713-e4df-4dba-933b-057feeac8dd1.woff2") format("woff2"),url("Fonts/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),url("Fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf") format("truetype"),url("Fonts/ed104d8c-7f39-4e8b-90a9-4076be06b857.svg#ed104d8c-7f39-4e8b-90a9-4076be06b857") format("svg");
+}

@@ -1,0 +1,172 @@
+
+CREATE TABLE DeploymentV1(
+Date varchar(30),
+Day varchar(30),
+DDI_5624 varchar(30),
+MicrosConnector_2151 varchar(30),
+DDI5XXX varchar(30),
+MicrosConnector_2XXX varchar(30),
+ddi_5XXX varchar(30),
+MicrosConn_2XXX varchar(30),
+Notes varchar(30),
+PRIMARY KEY(Date)
+ );
+
+ CREATE TABLE GL_1_16_2017(
+ storenum varchar(100),
+ POS varchar(30),
+ action_needed varchar(50),
+ success_date varchar(100),
+ store_type varchar(50),
+ PRIMARY KEY(storenum)
+ );
+
+CREATE TABLE PilotStores(
+STORE_ID varchar(500),
+POINT_OF_SALE_SYSTEM_TYPE_ID varchar(500),
+MARKET_DMA varchar(500),
+REGION_SII varchar(500),
+STORE_OWNERSHIP_TYPE_ID varchar(500),
+STORE_OWNERSHIP_TYPE varchar(500),
+PRINCIPAL_GROUP_NAME varchar(500),
+ORGANIZATION_UNIT varchar(500),
+STATE_CODE varchar(500),
+STATE_NAME varchar(500),
+CITY varchar(500),
+ZIP varchar(500),
+ADDRESS_LINE1 varchar(500),
+PHONE_NUM varchar(500),
+PRIMARY KEY(STORE_ID)
+ );
+
+
+ CREATE TABLE GL_1_25_2017(
+ storenum varchar(500),
+ POS varchar(500),
+ action_needed varchar(500),
+ success_date varchar(500),
+ store_type varchar(500)
+ );
+
+
+ CREATE TABLE scope(
+ column1 varchar(100),
+ column2 varchar(100),
+ column3 varchar(100),
+ column4 varchar(100),
+ PRIMARY KEY(column1 )
+ );
+
+CREATE TABLE stores(
+ STORE_ID varchar(100),
+ STORE_OWNERSHIP_TYPE_ID varchar(10),
+ PRINCIPAL_GROUP_NAME varchar(100),
+ POINT_OF_SALE_SYSTEM_TYPE_ID varchar(50),
+ POS_VERSION varchar(10),
+ PRIMARY KEY(STORE_ID)
+ );
+
+CREATE TABLE deployments(
+ STORE_ID varchar(100),
+ Deployment varchar(100),
+ daterange varchar(100)
+ );
+
+
+CREATE TABLE Deployment_List(
+Date varchar(30),
+Day varchar(30),
+DDI_5624 varchar(30),
+MicrosConnector_2151 varchar(30),
+DDI5XXX varchar(30),
+MicrosConnector_2XXX varchar(30),
+ddi_5XXX varchar(30),
+MicrosConn_2XXX varchar(30),
+Notes varchar(30),
+Comments varchar(500)
+ );
+
+CREATE TABLE MicrosSchedule(
+Store varchar(30),
+POS varchar(30),
+SRIIndicator varchar(5),
+Fifty810 varchar(5),
+POSGoLive varchar(10),
+Owner varchar(5),
+$tore varchar(30),
+Micros_connectoreversion varchar(10),
+MicrosConnectorSIS varchar(10),
+$t0re varchar(30),
+DDI56t3 varchar(10),
+TixTrailerR3 varchar(10),
+OpsDisplayUsercfg varchar(10),
+MicrosConnector2152 varchar(10),
+EMPRODServer varchar(20),
+AdminManagerPasswordChange8 varchar(10),
+BINRange142017 varchar(10),
+DDIVersion varchar(10),
+DDI5624 varchar(10),
+Cylance varchar(10),
+PDReceiver varchar(10),
+PCIRemediation varchar(10),
+CommandLineAuditing varchar(10), 
+Carhop_EXE varchar(10),
+Micros_Reference_Guide_Delivery_to_Desktop varchar(10),
+LEMSS varchar(20),
+IE9Upgrade varchar(5),
+IE11PartB varchar(10),
+MyMicrosIntegrationMMISServiceFix varchar(10),
+BINRange912016 varchar(10)
+ );
+
+CREATE TABLE InforSchedile(
+store varchar(30),
+SoftwareVersion varchar(30),
+POSType varchar(30),
+POSVersion varchar(50),
+NumTotalStalls varchar(10),
+NumTotalPOPSStals varchar(10),
+NumPAYSStalls varchar(10),
+LastHeardFrom varchar(50),
+Target varchar(50),
+Completed varchar(500)
+);
+
+NumTotalStalls 
+CREATE TABLE OMCSchedule(
+store varchar(30),
+OSRPOSType varchar(30),
+DCPPOS varchar(30),
+FMN varchar(50),
+Owner varchar(10),
+SoftwareVersion varchar(10),
+POPSStalls varchar(10),
+PAYSSyalls varchar(50),
+TotalStalls varchar(50),
+LastHeardFromUTC varchar(20),
+ActionNeeded varchar(20),
+Notes varchar(20),
+Deployment varchar(500) 
+);
+
+
+Master
+CREATE TABLE Micros(
+store varchar(50),
+POStype varchar(50),
+City varchar(50),
+State varchar(50),
+Versions varchar(50) 
+);
+
+CREATE TABLE Infor(
+store varchar(50),
+POStype varchar(50),
+Versions varchar(50) 
+);
+
+CREATE TABLE OMC(
+store varchar(50),
+POStype varchar(50),
+Versions varchar(50) 
+);

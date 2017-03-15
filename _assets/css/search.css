@@ -1,0 +1,132 @@
+/*! For adjusting the search and show entities
+*Created by Shea Price
+Shea.R.Price@gmail.com
+*/
+
+/*
+	Css stylesheet for Sonic
+	Written by Shea Price (Shea.R.Price@gmailcom)
+	Started on 01/16/17
+	
+*/
+
+/* Css Imports
+From Tim Giddens 
+*/
+@import "normalize.css";
+@import "foundation.min.css";
+
+/* Colors */
+.blue {
+	color: #85C1E9;
+}
+
+.azure {
+	color: #FBFCFC !important;
+}
+
+/* Global */
+
+body {
+	color: #FBFCFC !important;
+}	
+
+table {
+	margin-top: 20px;
+	width: 100%;
+}
+section {
+	padding: 80px 0px;
+	width: 100%;
+}
+
+/* Typography */
+h3 {
+	font: normal 1.875em/1em "A-Regular", sans-serif;
+	margin: 0px 0px 20px 0px;
+	color: #FBFCFC !important;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.logo {
+	display: inline-block;
+	max-width: 80%;
+}
+/* Rows */
+.row {
+	/*background: #FBFCFC !important;*/
+	max-width: 100%!important;
+}	
+.med-12 columns{
+	/*background: #FBFCFC !important;*/
+	max-width: 100%;
+}	
+
+/*Login page*/
+.login-container {
+	padding-top: 50px;
+}
+
+.error {
+	color: #f42525;
+	font: normal .9em/1em "A-Regular", sans-serif;
+	padding-bottom: 10px;
+}
+
+.login {
+	background: #f2f2f2;
+	border: 1px solid #ddd;
+	margin: auto;
+	max-width: 400px;
+	padding: 25px;
+}
+/* Footer */
+
+footer {
+	background: #FBFCFC;
+	padding: 50px 0px;
+}
+
+	footer .columns {
+		display: inline-block;
+		float: none !important;
+		vertical-align: bottom;
+	}
+
+	footer .logo {
+		color: #fff;
+	}
+	
+	footer nav {
+		padding: 25px 0px;
+	}
+	
+		footer nav a {
+			border-bottom: 2px solid rgba(133,193,233,.5);
+			color: #fff !important;
+			display: block;
+			font: normal 1em/1em "A-Bold", sans-serif;
+			padding: 8px 0px;
+			text-transform: uppercase;
+			
+			-webkit-font-smoothing: antialiased;
+		}
+		
+			footer nav a:last-child {
+				border: none;
+				padding-bottom: 0px;
+			}
+	
+	footer p {
+		color: #fff;
+	}
+	
+		footer p a {
+			color: #fff !important;
+		}
+		
+	footer .copyright p {
+		font-size: 0.875em;
+		margin: 5px 0px 0px 0px;
+	}
