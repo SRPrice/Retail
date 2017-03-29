@@ -2,7 +2,7 @@
    //require("data.php");
    $page['title'] = "The Master Schedule";
    
-    $db_ip = "172.16.5.201";
+    $db_ip = "localhost";
     
     if(isset($_POST['Planned']))
     {
