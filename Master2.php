@@ -1,71 +1,97 @@
-
 <?php
-    require("/_functions/data.php");
-    $page['title'] = "The Master Schedule";
-
+   //require("data.php");
+   $page['title'] = "The Master Schedule";
+   
+    $db_ip = "172.16.5.201";
     
-//retrieve information from database pilotstores
-    $attrs = array(PDO::ATTR_PERSISTENT => true);
-	$pdo = new PDO("mysql:dbname=retailsys;host=localhost", "root", "root", $attrs);
-	
-// the following tells PDO we want it to throw Exceptions for every error.
-// this is far more useful than the default mode of throwing php errors
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-// prepare the statement. the place holders allow PDO to handle substituting
-// the values, which also prevents SQL injection
-$stmt = $pdo->prepare("SELECT * from micros UNION ALL SELECT * from infor UNION ALL SELECT * FROM omc");
-
-// bind the parameters
-$stmt->bindValue(":productTypeId", 6);
-$stmt->bindValue(":brand", "Slurm");
-
-// initialise an array for the results 
-$store = array();
-if ($stmt->execute()) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $store[] = $row;
+    if(isset($_POST['Planned']))
+    {
+        echo "Submitting\n";
+        print_r($_POST);
+        //; $i++ throwing error
+        for($i = 0; $i<count($_POST['Planned']); $i++)
+        //for($i = 0; $i<count($_POST['Planned']);)
+        {
+            $dataString = "Planned=".$_POST['Planned'][$i].",Sched=" . $_POST['Sched'][$i].",RFC=" . $_POST['RFC'][$i].",TechName=" . $_POST['TechName'][$i].";";
+        }
+        echo "\n".$dataString;
+        // set post fields
+        $post = [
+        'submit' => 'true',
+        'activity_name' => 'DataSend',
+        'params'   => [
+        'Data' => $dataString
+        ]
+        ];
+    
+    } else {
+        $post = [
+        'submit' => 'true',
+        'activity_name' => 'GetDBMsg',
+        'params'   => [
+        'CustomData' => '',
+        //'SendToSema' => '0'
+        ]
+        ];
     }
-}
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        if(isset($_POST['store']))
-        {
-            echo "Submitting\n";
-	    //print_r($_POST);
-            $dataString = "store=" . $_POST['store'] . ",POStype=" . $_POST['POStype'] . "Version=" . $_POST['Version'];
-            // set post fields
-            $post = [
-            'submit' => 'true',
-            'activity_name' => 'DataSend',
-            'params'   => [
-                'Data' => $dataString
-            ]
-            ];
-        }
-       
-        $result = "";
-	print_r($_POST);
+    
+    $result = "";
 	
-	    function read_header($string)
-        {
-            $length = strlen($string);
-            echo "Header: $string<br />\n";
-            return $length;
-        }
-	
-	}
-// set PDO to null in order to close the connection
-$pdo = null;
-
-	include("_assets/header.php");
+    //print_r($_POST);
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL,"http://".$db_ip."/Deployments/Master2.php");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+    if(isset($_POST['DONE']) === true){
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+    }
+    //callbacks functions for the CURL library
+    //   curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'read_header');
+    //curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'read_body');
+    
+    $result = curl_exec($ch);
+    
+    
+    if ($error = curl_error($ch)) {
+        echo "Error: $error<br />\n";
+    }
+    
+    // define callback functions
+    
+    // Return the number of bytes actually written or return -1 to signal error to
+    // the library (it will  cause it to abort the transfer with a CURLE_WRITE_ERROR
+    // return code). (Added in 7.7.2)
+    function read_header($ch, $string)
+    {
+        $length = strlen($string);
+        echo "Header: $string<br />\n";
+        return $length;
+    }
+    
+    // Return the number of bytes actually taken care of.  If that amount differs
+    // from the amount passed to your function, it'll signal an error to the library
+    // and it will abort the transfer and return CURLE_WRITE_ERROR.
+    function read_body($ch, $string)
+    {
+        
+        $length = strlen($string);
+        echo "String: $string<br />\n";
+        echo "Received $length bytes<br />\n";
+        return $length;
+    }
+    
+    $results = json_decode($result,true);
+    
+    include("_assets/header.php");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="utf-8" http-equiv="encoding">
-<meta name="Results" content="width=device-width, initial-scale=1.0">
+<meta name="Deployments" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js">
 <link href="_assets/css/style.css" type="text/css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
@@ -83,52 +109,52 @@ $pdo = null;
 </div>
 <div class="row">
 <div class="row">
-<form action="" method="post">
-<table id="example" class="TableRegistry" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th>Select</th>
-							<th>Store</th>
-                            <th>POS Type</th>
-							<th>Version</th>
-							<th>Planned Deployment</th>
-							<th>Scheduled Go Live</th>
-							<th>RFC</th>
-							<th>Tech Name </th>
-						</tr>
-					 </thead>
-					 <tfoot>
-					 <tr>
-							<th>Select</th>
-							<th>Store</th>
-                            <th>POS Type</th>
-							<th>Version</th>
-							<th>Planned Deployment</th>
-							<th>Scheduled Go Live</th>
-							<th>RFC</th>
-							<th>Tech Name </th>
-						</tr>
-					 </tfoot>
-				   <tbody>
-				   <?php
-				  foreach($store as $row) {					
-					?>
-					<tr>
-					<td><input type="checkbox" name="TextBox[]"></td>
-					<td><?= $row['store']; ?></td>
-                    <td><?= $row['POStype']; ?></td>
-					<td><?= $row['Versions']; ?></td>
-					<td><input type="text" name="Planned" id="Planned" name="Planned[]"></td>
-					<td><input type="text" type="text" name="Sched" id="Sched" name="Sched[]"></td>
-					<td><input type="text" name="RFC" id="RFC" name="RFC[]"></td>
-					<td><input type="text" name="TechName" id="TechName" name="TechName[]"></td>
-				   </tr>
-				   <?php
-				  }
-				  ?>
-				  
-			</tbody>
-                </table>
+<form name="itemsform" action="" method="post" id="envoySubmit">
+<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<thead>
+<tr>
+<th>Select</th>
+<th>Store</th>
+<th>POS Type</th>
+<th>Version</th>
+<th>Planned Deployment</th>
+<th>Scheduled Go Live</th>
+<th>RFC</th>
+<th>Tech Name </th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<th>Select</th>
+<th>Store</th>
+<th>POS Type</th>
+<th>Version</th>
+<th>Planned Deployment</th>
+<th>Scheduled Go Live</th>
+<th>RFC</th>
+<th>Tech Name </th>
+</tr>
+</tfoot>
+<tbody>
+<?php
+    foreach($store as $row) {
+        ?>
+<tr>
+<td><input type="checkbox" name="TextBox[]"></td>
+<td><?= $row['store']; ?></td>
+<td><?= $row['POStype']; ?></td>
+<td><?= $row['Versions']; ?></td>
+<td><input type="text" name="Planned" id="Planned" name="Planned[]"></td>
+<td><input type="text" type="text" name="Sched" id="Sched" name="Sched[]"></td>
+<td><input type="text" name="RFC" id="RFC" name="RFC[]"></td>
+<td><input type="text" name="TechName" id="TechName" name="TechName[]"></td>
+</tr>
+<?php
+    }
+    ?>
+
+</tbody>
+</table>
 </div>
 <div align="center">
 </div class="col-sm-7">
@@ -160,103 +186,94 @@ $('#datatableId tfoot tr').appendTo('#datatableId thead');
 </script>
 <script type="text/javascript" type="text/javascript">
 $(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    $('#example tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-    } );
- 
-    // DataTable
-    var table = $('#example').DataTable();
- 
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-} );
+                  // Setup - add a text input to each footer cell
+                  $('#example tfoot th').each( function () {
+                                              var title = $(this).text();
+                                              $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+                                              } );
+                  
+                  // DataTable
+                  var table = $('#example').DataTable();
+                  
+                  // Apply the search
+                  table.columns().every( function () {
+                                        var that = this;
+                                        
+                                        $( 'input', this.footer() ).on( 'keyup change', function () {
+                                                                       if ( that.search() !== this.value ) {
+                                                                       that
+                                                                       .search( this.value )
+                                                                       .draw();
+                                                                       }
+                                                                       } );
+                                        } );
+                  } );
 </script>
 <div align="center'>
- <tr>
-	<td colspan="4" style="text-align: center;"><input type="submit" name="submit" value="save" /></td>
-	    </tr>
-		</div>
+<tr>
+<td colspan="4" style="text-align: right;"><input type="submit" class="button" name="submit" value="DONE" /></td>
+</tr>
+</div>
 </section>
-<!--This is the code I am trying to parse and then send to the database -->
 <script type="text/javascript">
 function sendData() {
-    var inputs = document.getElementById('example').getElementsByTagName('input'),
+    var inputs = document.getElementById('equipment-table').getElementsByTagName('input'),
     data = [],
-    name, TextBox, store, POStype, Version, Planned, Sched, RFC, TechName;
+    name, Planned[], Sched[], RFC[], TechName[];
     
     for (var i = 0; i < inputs.length; i++) {
         if ( inputs[i].type === 'submit') {
             continue;
         }
         
-        if ( inputs[i].value ) {
-            name = inputs[i].name.split('-val');
-            TextBox = inputs[i].name.split('TextBox');
-            
-            if (TextBox.length > 1) {
-                data.push({name: name[0], TextBox: inputs[i].value});
-            }
-            else {
-                data.push({name: name[0], store: inputs[i].value});
-            }
-            else {
-                data.push({name: name[0], POStype: inputs[i].value});
-            }
-			else {
-                data.push({name: name[0], Version: inputs[i].value});
-            }
-			else {
-                data.push({name: name[0], Planned: inputs[i].value});
-            }
-			else {
-                data.push({name: name[0], Sched: inputs[i].value});
-            }
-			else {
-                data.push({name: name[0], RFC: inputs[i].value});
-            }
-			else {
-                data.push({name: name[0], TechName: inputs[i].value});
-            }
+        var dataString = ''; for (var i = 0, len = input.length; i<len,i++) { dataString += 'Planned' + i + '=' + Planned[i] + ',Sched' + i + '=' + Sched[i] + ',RFC' + i + '=' + RFC[i] + 'TechName' + i + '=' + TechName[i] + ','; }
+        
+        var array_objects = [
+        {'name': 'Planned[]';},
+        {'name': 'Sched[]';},
+        {'name': 'RFC[]';},
+        {'name': 'TechName[]';},
+        ]
+        var array_to_join = [];
+        
+        for (x = 0; x < array_objects.length;
+             x++) {
+            _.map(array_objects[x], function(key, value) {
+                  array_to_join.push(key + '=' + value);
+                  });
         }
+        document.body.innerHTML =
+        array_to_join.join(', ');
     }
- }
-
-</script>
-<?php
-use retailsys\ORM\deployments;
-$data = [
-	'store', 'POStype', 'Version', 'Planned', 'Sched', 'RFC', 'TachName'
-];
-$articles = deployments::get('Articles');
-$entities = $articles->newEntities($this->request->getData());
-
-// In a controller.
-foreach ($store as $row) {
-    // Save row
-    $articles->save($row);
-};
-?>
-<script type="text/javascript">   
-window.onclick(function(){
-document.example.save();
-sendData();
 }
- </script>
- <!-- Here ^ I do not have anythign to send it to the DB -->
-</body>
-</html>
-<?php
-    include("/_assets/footer.php");
-    ?>
+}
+
+var array_objects = [
+{'name': 'Planned[]';},
+{'name': 'Sched[]';},
+{'name': 'RFC[]';},
+{'name': 'TechName[]';},
+]
+var array_to_join = [];
+
+for (x = 0; x < array_objects.length;
+     x++) {
+    _.map(array_objects[x], function(key, value) {
+          array_to_join.push(key + '=' + value);
+          });
+}
+document.body.innerHTML =
+array_to_join.join(', ');
+
+
+window.onclick = (function(){
+               document.itemsform.submit();
+               sendData();
+               }
+               </script>
+               </body>
+               </html>
+               <?php
+               include("/_assets/footer.php");
+               
+?>
